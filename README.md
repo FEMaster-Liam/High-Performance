@@ -1,8 +1,9 @@
 # High-Performance
 It collects many high performance JavaScript.
+=
 1. JavaScript 会阻塞页面渲染,将<script>标签放在boby底部
 2. 减少<script>的数量,通过合并script标签,使用打包工具或者专门的合并处理器来合并。
-3. defer, 在script标签中添加这个属性,如果浏览器支持,就可以延迟加载script标签,延迟加载就是在页面加载完之后,在加载JavaScript?
+3. *defer*, 在script标签中添加这个属性,如果浏览器支持,就可以延迟加载script标签,延迟加载就是在页面加载完之后,在加载JavaScript?
 4. 动态加载JavaScript标签script:
 	var script = document.createElement("script");
 	script.type = "text/javascript";
@@ -40,7 +41,7 @@ IE中使用readyState:
     }
   }
   这样就会先file1.js 再file2.js,但是最好的都是将两个file按顺序合并在一起。
-6. 使用XMLHttpRequest脚本注入
+6. 使用***XMLHttpRequest***脚本注入
   var xhr = new XMLHttpRequest();
   var.open("get","file1.js",true);
   xhr.onreadystatechange = function() {
