@@ -73,6 +73,47 @@ IE中使用***readyState***:
 8. with 和 try...catch 会产生一个新变量，并置于作用域链顶端，访问这个新变量的所有属性速度会很快，但于此同时，访问其他的作用域变量的速度都会变慢。  
 9. 搜索原型链越深，速度越慢。  
 10. 对象成员嵌套越深，读取速度就会越慢。执行location.href比执行window.location.href要快。所以缓存成员变量可以提升执行速度。  
+11. 减少DOM的访问次数，把运算尽量留在ECMAScript这一段处理。  
+
+```
+function innerHTMLLoop() {
+	for (var count = 0; count <15000; count++) {
+		document.getElementById('here').innerHTML += 'a';
+	}
+}
+```
+修改为：
+
+```
+function innerHTMLLoop() {
+	var content = ''
+	for (var count = 0; count <15000; count++) {
+		content += 'a'
+	}
+	document.getElementById('here').innerHTML += content;
+}
+```  
+12. 在修改页面区域时候，绝大多数的浏览器(除了基于WebKit的新版浏览器)，innerHTML的速度要稍快于原生document.createElement()。  
+13. 当需要大批量创建DOM节点时，使用节点克隆element.cloneNone()(element表示已有节点)，速度会稍快一点。  
+14. 在相同的内容和数量下，遍历一个数组的速度明显快于遍历一个HTML集合的速度，读取数组的length比读取集合的length快得多。
+读取元素集合的length会引发集合进行更新。所以当循环遍历一个HTML元素集合是，推荐将length缓存到一个局部变量中。  
+如果该元素集合相对较大，可以考虑先将集合元素拷贝到数组中，再进行遍历（拷贝的时间 < 数组遍历提升的时间）。  
+
+```
+function collectionGlobal() {
+	var coll = document.getElementsByTagName('div'),
+	    len = coll.length,
+		nodeName = '',
+		nodeType = '',
+		tagName = '';
+	for (var count = 0; count < len; count++) {
+		nodeName = document.getElementsByTagName('div')[count].nodeName;
+		nodeType = document.getElementsByTagName('div')[count].nodeType;
+		tagName = document.getElementsByTagName('div')[count].tagName;
+	}
+	return nodeName
+}
+```
                                                
                                               
   
