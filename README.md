@@ -20,7 +20,8 @@ It collects many high performance JavaScript.
 		// TO DO
 	}
 	```  
-IE中使用***readyState***:  
+IE中使用***readyState***:
+
 	```
 	function loadScript (url, callback) {
 	  var script = document.createElement("script");
