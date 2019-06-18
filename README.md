@@ -102,11 +102,10 @@ function innerHTMLLoop() {
 ```
 function collectionGlobal() {
 	var coll = document.getElementsByTagName('div'),
-	    len = coll.length,
-		nodeName = '',
+	    nodeName = '',
 		nodeType = '',
 		tagName = '';
-	for (var count = 0; count < len; count++) {
+	for (var count = 0; count < coll.length; count++) {
 		nodeName = document.getElementsByTagName('div')[count].nodeName;
 		nodeType = document.getElementsByTagName('div')[count].nodeType;
 		tagName = document.getElementsByTagName('div')[count].tagName;
@@ -114,7 +113,24 @@ function collectionGlobal() {
 	return nodeName
 }
 ```
-                                               
+   修改为：  
+```
+function collectionNodesLocal() {
+	var coll = document.getElementsByTagName('div'),
+	    len = coll.length,
+		nodeName = '',
+		nodeType = '',
+		tagName = '',
+		el = null;
+	for (var count = 0; count < len; count++) {
+		el = coll[count];
+		nodeName = el.nodeName;
+		nodeType = el.nodeType;
+		tagName = el.tagName;
+	}
+	return nodeName
+}
+```
                                               
   
   
